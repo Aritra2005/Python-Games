@@ -22,7 +22,7 @@ bgimg = pygame.image.load("snake.jpeg")
 bgimg = pygame.transform.scale(bgimg, (screen_width, screen_height)).convert_alpha()
 
 # Game Title
-pygame.display.set_caption("SnakesWithHarry")
+pygame.display.set_caption("Snakes")
 pygame.display.update()
 
 clock = pygame.time.Clock()
