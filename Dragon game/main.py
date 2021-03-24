@@ -1,6 +1,7 @@
 import pygame
 import sys
 import time
+import os
 
 pygame.init()
 
@@ -18,11 +19,14 @@ back_image = pygame.image.load('gallery/sprites/background.jpg')
 back_image = pygame.transform.scale(back_image, (SCREEN_WIDTH, SCREEN_HEIGHT)).convert_alpha()
 game_over = pygame.image.load('gallery/sprites/game_over.png')
 game_over = pygame.transform.scale(game_over, (SCREEN_WIDTH, SCREEN_HEIGHT)).convert_alpha()
+life = pygame.image.load('gallery/sprites/life.png')
+life = pygame.transform.scale(life, (20, 20))
 GAME_SPRITES = {'dino': pygame.image.load('gallery/sprites/dino.png').convert_alpha(),
                 'dragon': pygame.image.load('gallery/sprites/dragon.png').convert_alpha(),
                 'background': back_image,
                 'welcome': welcome_image,
                 'game-over': game_over,
+                'life': life
                 }
 
 GAME_SOUNDS = {
@@ -81,7 +85,13 @@ def game_over():
         pygame.display.update()
 
 
+def show_life(coordinates):
+    for x, y in coordinates:
+        game_window.blit(GAME_SPRITES['life'], (x, y))
+
+
 def main_game():
+    t = time.time()
     x = time.time()
     cross = True
     score = 0
@@ -97,7 +107,13 @@ def main_game():
     vel_x = 0
     vel_y = 0
     limit = -800
+    life_coordinates = [[40, 40], [60, 40], [80, 40]]
+    life_deducted = True
+    life_deduction_delay = delay
 
+    if not os.path.exists('high_score.txt'):
+        with open('high_score.txt', 'w') as f:
+            f.write('0')
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -155,12 +171,21 @@ def main_game():
         if timer:
             if time.time() - x >= delay:
                 cross = True
-        if is_collide(player_x, player_y, attacker):
+            if time.time() - t >= life_deduction_delay:
+                life_deducted = True
+        if is_collide(player_x, player_y, attacker) and life_deducted:
+            t = time.time()
+            del life_coordinates[len(life_coordinates) - 1]
+            life_deducted = False
+        if len(life_coordinates) == 0:
             GAME_SOUNDS['hit'].play()
+            with open('high_score.txt', 'w') as z:
+                z.write(str(score))
             game_over()
             GAME_SOUNDS['die'].play()
         dragons(attacker)
         display_text(str(score), (255, 0, 0), 793, 48)
+        show_life(life_coordinates)
         pygame.display.update()
         clock.tick(60)
 
