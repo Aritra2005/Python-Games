@@ -141,6 +141,7 @@ def show_life(coordinates):
 def main_game():
     # Game variables :-
 
+    global high_score
     t = time.time()
     x = time.time()
     cross = True
@@ -275,10 +276,14 @@ def main_game():
         # Passes the co_ordinates of the dragon(attacker) to the dragon function for displaying :-
         dragons(attacker)
 
+        # Checking if score is greater than previous high score :-
+        if score > int(high_score):
+            # If yes then equalise score and high score variables :-
+            high_score = score
         # Passing the score and high score to display_text for displaying on the screen :-
 
         display_text(str(score), (255, 0, 0), 793, 51)
-        display_text(str(score), (255, 0, 0), 459, 53)
+        display_text(str(high_score), (255, 0, 0), 459, 53)
 
         # Passes the life_coordinates to show_life function for displaying on the screen:-
         show_life(life_coordinates)
