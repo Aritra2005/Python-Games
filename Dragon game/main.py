@@ -28,11 +28,16 @@ game_window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 pygame.display.set_caption("Dragon Game by Aritra")
 
+# Getting the previous high score :-
+
+with open('high_score.txt', 'r') as z:
+    high_score = z.read()
+
 # Configuring images :-
 
 welcome_image = pygame.image.load('gallery/sprites/welcome_dragon.jpg')
 welcome_image = pygame.transform.scale(welcome_image, (SCREEN_WIDTH, SCREEN_HEIGHT)).convert_alpha()
-back_image = pygame.image.load('gallery/sprites/background.jpg')
+back_image = pygame.image.load('gallery/sprites/background.png')
 back_image = pygame.transform.scale(back_image, (SCREEN_WIDTH, SCREEN_HEIGHT)).convert_alpha()
 game_over = pygame.image.load('gallery/sprites/game_over.png')
 game_over = pygame.transform.scale(game_over, (SCREEN_WIDTH, SCREEN_HEIGHT)).convert_alpha()
@@ -104,7 +109,14 @@ def dragons(dragon_list):
 
 # Displays the game_over screen :-
 
-def game_over():
+def game_over(score):
+    # Checking if the current score is greater than the previous high score :-
+
+    if score > int(high_score):
+        # If yes then writing the current score in the file :-
+
+        with open('high_score.txt', 'w') as f:
+            f.write(str(score))
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -257,20 +269,16 @@ def main_game():
 
         if len(life_coordinates) == 0:
             GAME_SOUNDS['hit'].play()
-
-            # Writes the new high_score after the game gets over :-
-
-            with open('high_score.txt', 'w') as z:
-                z.write(str(score))
-            game_over()
+            game_over(score)
             GAME_SOUNDS['die'].play()
 
         # Passes the co_ordinates of the dragon(attacker) to the dragon function for displaying :-
         dragons(attacker)
 
-        # Passing the score to display_text for displaying on the screen :-
+        # Passing the score and high score to display_text for displaying on the screen :-
 
-        display_text(str(score), (255, 0, 0), 793, 48)
+        display_text(str(score), (255, 0, 0), 793, 51)
+        display_text(str(score), (255, 0, 0), 459, 53)
 
         # Passes the life_coordinates to show_life function for displaying on the screen:-
         show_life(life_coordinates)
