@@ -230,6 +230,10 @@ def main_game():
         if attacker_x <= limit:
             attacker_x = SCREEN_WIDTH + 100
 
+        # Re positioning the player after it goes out of the screen :-
+        if player_x == -200:
+            player_x = SCREEN_WIDTH - 90
+
         # Jump the player :-
 
         if player_jumped:
