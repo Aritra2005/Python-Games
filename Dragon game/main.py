@@ -110,13 +110,9 @@ def dragons(dragon_list):
 # Displays the game_over screen :-
 
 def game_over(score):
-    # Checking if the current score is greater than the previous high score :-
-
-    if score > int(high_score):
-        # If yes then writing the current score in the file :-
-
-        with open('high_score.txt', 'w') as f:
-            f.write(str(score))
+    # Writing the current score in the file :-
+    with open('high_score.txt', 'w') as f:
+        f.write(str(score))
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
