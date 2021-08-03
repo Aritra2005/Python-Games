@@ -108,6 +108,7 @@ class BouncingBall:
             if self.game_stats.left_score > 0:
                 self.game_stats.left_score -= self.settings.points_deduction
                 self.score_board.left_score = self.game_stats.left_score
+                self.score_board.prep_scores()
 
         # Checks if the ball collides with the right wall and reducing the score:-
         elif self.ball.rect.right >= self.screen_rect.right:
@@ -117,6 +118,7 @@ class BouncingBall:
             if self.game_stats.right_score > 0:
                 self.game_stats.right_score -= self.settings.points_deduction
                 self.score_board.right_score = self.game_stats.right_score
+                self.score_board.prep_scores()
 
     def check_ball_bouncer_collisions(self):
         """ Checks if the ball collides with bouncers and changes its direction and velocity"""
@@ -128,6 +130,7 @@ class BouncingBall:
             # Adding the score to the left player:-
             self.game_stats.left_score += self.settings.points_add
             self.score_board.left_score = self.game_stats.left_score
+            self.score_board.prep_scores()
 
         # Checks if the ball collides with the right bouncer :-
         elif self.ball.rect.colliderect(self.bouncers[1]):
@@ -137,6 +140,7 @@ class BouncingBall:
             # Adding the score to the right player:-
             self.game_stats.right_score += self.settings.points_add
             self.score_board.right_score = self.game_stats.right_score
+            self.score_board.prep_scores()
 
     def check_ball_collisions(self):
         """ Checks if the ball collides and changes its direction and velocity. """

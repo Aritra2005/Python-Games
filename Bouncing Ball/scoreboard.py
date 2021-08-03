@@ -10,6 +10,7 @@ class Scoreboard:
         self.right_score = stats.right_score
         self.font = pygame.font.SysFont(None, 48)
         self.settings = settings
+        self.prep_scores()
 
     def prep_scores(self):
         """ Converts the scores into an image . """
@@ -41,6 +42,5 @@ class Scoreboard:
 
     def show_scores(self):
         """ Shows the scores on the screen. """
-        self.prep_scores()
         self.screen.blit(self.left_score_image, self.left_score_rect)
         self.screen.blit(self.right_score_image, self.right_score_rect)
