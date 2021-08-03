@@ -11,6 +11,7 @@ class Scoreboard:
         self.font = pygame.font.SysFont(None, 48)
         self.settings = settings
         self.prep_scores()
+        self.prep_players()
 
     def prep_scores(self):
         """ Converts the scores into an image . """
@@ -26,21 +27,21 @@ class Scoreboard:
         self.right_score_rect.right = self.screen_rect.right
         self.left_score_rect.top = self.right_score_rect.top = self.screen_rect.top + 40
 
-    def show_players(self):
+    def prep_players(self):
         """
-        Shows the players.
+        Turns the player strings into images.
         :return: None
         """
-        player1 = self.font.render('Player1', True, self.settings.score_color, self.settings.screen_color)
-        player2 = self.font.render('Player2', True, self.settings.score_color, self.settings.screen_color)
-        rect1 = player1.get_rect()
-        rect2 = player2.get_rect()
-        rect1.left, rect1.top = self.screen_rect.left, self.screen_rect.top + 5
-        rect2.right, rect1.top = self.screen_rect.right, self.screen_rect.top + 5
-        self.screen.blit(player1, rect1)
-        self.screen.blit(player2, rect2)
+        self.player1 = self.font.render('Player1', True, self.settings.score_color, self.settings.screen_color)
+        self.player2 = self.font.render('Player2', True, self.settings.score_color, self.settings.screen_color)
+        self.rect1 = self.player1.get_rect()
+        self.rect2 = self.player2.get_rect()
+        self.rect1.left, self.rect1.top = self.screen_rect.left, self.screen_rect.top + 5
+        self.rect2.right, self.rect1.top = self.screen_rect.right, self.screen_rect.top + 5
 
-    def show_scores(self):
-        """ Shows the scores on the screen. """
+    def show_scores_players(self):
+        """ Shows the scores, players on the screen. """
         self.screen.blit(self.left_score_image, self.left_score_rect)
         self.screen.blit(self.right_score_image, self.right_score_rect)
+        self.screen.blit(self.player1, self.rect1)
+        self.screen.blit(self.player2, self.rect2)

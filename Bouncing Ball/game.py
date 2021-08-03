@@ -62,8 +62,8 @@ class BouncingBall:
         if not self.game_stats.game_active:
             self.button.draw_button()
 
-        # Drawing the scores to the screen:-
-        self.score_board.show_scores()
+        # Drawing the scores and players to the screen:-
+        self.score_board.show_scores_players()
 
         # Show the timer:-
         self.timer.show_time()
@@ -246,8 +246,6 @@ class BouncingBall:
             # Checking the ball collisions :-
             if self.game_stats.game_active:
                 self.check_ball_collisions()
-            # Shows the players :-
-            self.score_board.show_players()
             # Checking the timer:-
             self.check_timer()
             # Updating the screen :-
