@@ -217,7 +217,7 @@ class BouncingBall:
         :return: None
         """
 
-        if self.timer.countdown == 0:
+        if self.settings.time_in_seconds == 0:
             if self.game_stats.left_score > self.game_stats.right_score:
                 self.show_winner('Player1 has won the game')
             elif self.game_stats.right_score > self.game_stats.left_score:
@@ -231,7 +231,6 @@ class BouncingBall:
         # Initialize pygame modules :-
         start_time = time.time()
         pygame.init()
-        self.timer = Timer(self.screen, self.settings)
 
         while True:
             # Checking for the events :-
@@ -240,6 +239,7 @@ class BouncingBall:
             time2 = time.time()
             if time2 - start_time >= 1 and self.game_stats.game_active:
                 self.timer.update()
+                self.timer.prep_time()
                 start_time = time2
             # Filling the screen with green color:-
             self.screen.fill(pygame.Color(self.settings.screen_color))

@@ -7,7 +7,6 @@ class Timer:
         self.screen = screen
         self.settings = settings
         self.screen_rect = screen.get_rect()
-        self.countdown = self.settings.time_in_seconds
         self.text_color = self.settings.time_text_color
         self.screen_color = self.settings.screen_color
         self.font = pygame.font.SysFont(None, 48)
@@ -17,7 +16,7 @@ class Timer:
         Converts the countdown time to image
         :return: None
         """
-        countdown_string = str(self.countdown) + ' secs'
+        countdown_string = str(self.settings.time_in_seconds) + ' secs'
         self.time_image = self.font.render(countdown_string, True, self.text_color, self.screen_color)
         self.rect = self.time_image.get_rect()
         self.rect.centerx = self.screen_rect.centerx
@@ -36,4 +35,4 @@ class Timer:
         Updates the timer.
         :return: None
         """
-        self.countdown -= 1
+        self.settings.time_in_seconds -= 1
